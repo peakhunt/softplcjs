@@ -7,6 +7,8 @@
  *
  * TODO
  * a) channel filter
+ * b) raw value & engineering value
+ * c) lookup table
  */
 var assert = require('assert');
 
@@ -143,13 +145,6 @@ module.exports = {
   createDigitalVirtual: function(chnl_num, name) {
     return new Channel(chnl_num, name, ChannelType.DIGITAL, ChannelDirection.VIRTUAL);
   },
-  ChannelType : {
-    DIGITAL : ChannelType.DIGITAL,
-    ANALOG  : ChannelType.ANALOG
-  },
-  ChannelDirection : {
-    INPUT   : ChannelDirection.INPUT,
-    OUTPUT  : ChannelDirection.OUTPUT,
-    VIRTUAL : ChannelDirection.VIRTUAL 
-  }
+  ChannelType : ChannelType,
+  ChannelDirection : ChannelDirection
 };

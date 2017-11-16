@@ -4,9 +4,12 @@
  * @file alarm.js
  * @author Hawk Bokdol Hyouck Kim, hawk.kim1974@gmail.com
  * @version 0.1
+ *
+ * TODO
+ * a) alarm condition & logic
  */
 var assert  = require('assert');
-var channel = require('channel');
+var channel = require('./channel');
 
 const AlarmState = {
   NORMAL    : 'Normal',
@@ -16,6 +19,12 @@ const AlarmState = {
 const AlarmAckState = {
   NOT_ACK   : 'NotAcked',
   ACK       : 'Acked'
+};
+
+const AlarmSeverity = {
+  MINOR     : 'Minor',
+  MAJOR     : 'Major',
+  CRITICAL  : 'Critical',
 };
 
 /**
@@ -29,13 +38,14 @@ const AlarmAckState = {
  * - not_acked  : alarm is not acked by user
  * - acked      : alarm is acked by user
  */
-function Alarm(alarm_num, name, chnl, cond) {
+function Alarm(alarm_num, name, chnl, severity, cond) {
   this.alarm_num    = alarm_num;        /** alarm number : must be unique among alarms  */
   this.name         = name;             /** alarm string description                    */
   this.chnl         = chnl;             /** associated channel number                   */
   this.alarm_time   = new Date();       /** last time alarm occurred                    */
   this.alarm_state  = AlarmState.NORMAL;
   this.ack_state    = AlarmAckState.NOT_ACK;
+  this.severity     = severity;
 
   // in case of digital channel
   // alarm condition is either true or false
@@ -56,6 +66,30 @@ Alarm.prototype = {
    */
   toString: function() {
     return "Alarm " + this.alarm_num + ":" + this.name;
+  },
+
+  /**
+   * @function Alarm.getAlarmNum()
+   * returns alarm number associated with the alarm object.
+   */
+  getAlarmNum : function() {
+    return this.alarm_num;
+  },
+
+  /**
+   * @function Alarm.getName()
+   * returns alarm name associated with the alarm object.
+   */
+  getName : function() {
+    return this.name;
+  },
+
+  /**
+   * @function Alarm.getChannel()
+   * returns channel associated with the alarm object.
+   */
+  getChannel : function() {
+    return this.chnk;
   },
 
   /**
@@ -83,6 +117,14 @@ Alarm.prototype = {
   },
 
   /**
+   * @function Alarm.getSeverity()
+   * returns alarm severity
+   */
+  getSeverity : function() {
+    return this.severity;
+  },
+
+  /**
    * @function Alarm.ack()
    * acknowledges current alarm.
    * if alarm is in Alarm state, 
@@ -94,6 +136,20 @@ Alarm.prototype = {
     }
   },
 
+  /**
+   * @function Alarm.update()
+   * updates the alarm by checking associated channel
+   */
   update : function() {
+    // FIXME
   }
+};
+
+module.exports = {
+  createAlarm: function(alarm_num, name, chnl, severity, cond) {
+    return new Alarm(alarm_num, name, chnl, severity, cond);
+  },
+  AlarmState: AlarmState,
+  AlarmAckState: AlarmAckState,
+  AlarmSeverity: AlarmSeverity
 };
