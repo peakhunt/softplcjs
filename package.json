@@ -1,0 +1,17 @@
+{
+  "name": "softplcjs",
+  "version": "1.0.0",
+  "description": "Soft PLC implementation in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/tape tests/*.js"
+  },
+  "author": "Hawk Kim",
+  "license": "ISC",
+  "devDependencies": {
+    "tape": "^4.8.0"
+  },
+  "dependencies": {
+    "assert": "^1.4.1"
+  }
+}
